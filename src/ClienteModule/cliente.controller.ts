@@ -1,11 +1,11 @@
 import { Controller, Post, Body, Get, Param } from '@nestjs/common';
 import { ClienteService } from './cliente.service';
 
-@Controller()
+@Controller('clientes')
 export class ClienteController {
   constructor(private readonly clienteService: ClienteService) {}
 
-  @Get('cliente/:email')
+  @Get('/:email')
   async cliente(@Param('email') email: string) {
     return this.clienteService.findOne({
       email,
