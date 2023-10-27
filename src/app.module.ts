@@ -5,13 +5,19 @@ import { AppService } from './app.service';
 import { ClienteModule } from './ClienteModule/cliente.module';
 import { EstabelecimentoModule } from './EstabelecimentoModule/estabelecimento.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import typeorm from './config/typeorm';
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      type: 'better-sqlite3',
-      database: 'db',
-      entities: ['/**/*.entity{.ts,.js}'],
+    ConfigModule.forRoot({
+      isGlobal: true,
+      load: [typeorm],
+    }),
+    TypeOrmModule.forRootAsync({
+      inject: [ConfigService],
+      useFactory: async (configService: ConfigService) =>
+        configService.get('typeorm'),
     }),
     ClienteModule,
     EstabelecimentoModule,
