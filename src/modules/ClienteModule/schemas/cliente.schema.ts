@@ -5,7 +5,6 @@ type ByBoolean<T> = {
 };
 
 export interface CreateClienteDto extends Omit<Cliente, 'id'> {}
-export interface LoginClienteDto extends Pick<Cliente, 'email' | 'senha'> {}
 
 export const ClienteSelectLogin: ByBoolean<Partial<Cliente>> = {
   email: true,
