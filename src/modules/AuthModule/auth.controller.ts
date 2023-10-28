@@ -2,6 +2,7 @@ import { Body, Controller, HttpCode, Post } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { LoginClienteDto } from './schemas/login.schema';
 import { CreateClienteDto } from '../ClienteModule/schemas/cliente.schema';
+import { CreateEstabelecimentoDTO } from '../EstabelecimentoModule/schemas/estabelecimento.schema';
 
 @Controller('auth')
 export class AuthController {
@@ -20,6 +21,15 @@ export class AuthController {
   @Post('signup')
   async signUp(@Body() cliente: CreateClienteDto) {
     const res = await this.authService.signUp(cliente);
+
+    return res;
+  }
+
+  @Post('signup-estabelecimento')
+  async signUpEstabelecimento(
+    @Body() estabelecimento: CreateEstabelecimentoDTO,
+  ) {
+    const res = await this.authService.signUpEstabelecimento(estabelecimento);
 
     return res;
   }

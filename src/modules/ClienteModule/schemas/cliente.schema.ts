@@ -9,4 +9,5 @@ export interface CreateClienteDto extends Omit<Cliente, 'id'> {}
 export const ClienteSelectLogin: ByBoolean<Partial<Cliente>> = {
   email: true,
   senha: true,
+  endereco: false,
 };

@@ -12,16 +12,17 @@ export class ClienteService {
   ) {}
 
   async findAll(): Promise<Cliente[]> {
-    return await this.clienteRepo.find({});
+    return await this.clienteRepo.find({ relations: { endereco: true } });
   }
 
   async findOne(email: string): Promise<Cliente> {
     return await this.clienteRepo.findOne({
       where: { email },
+      select: ['email', 'senha'],
     });
   }
 
-  async createCliente(cliente: CreateClienteDto): Promise<Cliente> {
+  async create(cliente: CreateClienteDto): Promise<Cliente> {
     return await this.clienteRepo.save(cliente);
   }
 }

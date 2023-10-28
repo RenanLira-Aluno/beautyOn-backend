@@ -1,9 +1,36 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  OneToMany,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+import { ArrayMinSize, IsDefined } from 'class-validator';
+import { Endereco } from './endereco.entity';
+import { HorarioFuncionamento } from './horarioFuncionamento.entity';
 
 @Entity()
 export class Estabelecimento {
   @PrimaryGeneratedColumn('uuid')
   id: string;
+
+  @OneToOne(() => Endereco, (endereco) => endereco.estabelecimento, {
+    nullable: false,
+    cascade: true,
+  })
+  @JoinColumn()
+  @IsDefined({ message: 'Endereço é obrigatório' })
+  endereco: Endereco;
+
+  @OneToMany(() => HorarioFuncionamento, (horario) => horario.estabelecimento, {
+    cascade: true,
+    nullable: false,
+  })
+  @ArrayMinSize(2, {
+    message: 'É necessário ter pelo menos 2 horários de funcionamento',
+  })
+  horariosFuncionamento: HorarioFuncionamento[];
 
   @Column()
   nome: string;
