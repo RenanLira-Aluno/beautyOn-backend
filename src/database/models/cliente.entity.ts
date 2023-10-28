@@ -1,9 +1,23 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+import { Endereco } from './endereco.entity';
 
 @Entity()
 export class Cliente {
   @PrimaryGeneratedColumn('uuid')
   id: string;
+
+  @OneToOne(() => Endereco, (endereco) => endereco.cliente, {
+    nullable: true,
+    cascade: true,
+  })
+  @JoinColumn()
+  endereco?: Endereco;
 
   @Column()
   nome: string;

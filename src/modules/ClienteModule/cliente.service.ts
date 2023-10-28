@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Cliente } from 'src/database/models/cliente.entity';
 import { Repository } from 'typeorm';
-import { CreateClienteDto, ClienteSelectLogin } from './schemas/cliente.schema';
+import { CreateClienteDto } from './schemas/cliente.schema';
 
 @Injectable()
 export class ClienteService {
@@ -18,7 +18,6 @@ export class ClienteService {
   async findOne(email: string): Promise<Cliente> {
     return await this.clienteRepo.findOne({
       where: { email },
-      select: { ...ClienteSelectLogin },
     });
   }
 
