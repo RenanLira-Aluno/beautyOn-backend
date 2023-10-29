@@ -1,4 +1,5 @@
 import {
+  ChildEntity,
   Column,
   Entity,
   JoinColumn,
@@ -9,19 +10,12 @@ import {
 import { ArrayMinSize, IsDefined } from 'class-validator';
 import { Endereco } from './endereco.entity';
 import { HorarioFuncionamento } from './horarioFuncionamento.entity';
+import { Usuario } from './usuario.entity';
+import { Profissional } from './profissional.entity';
+import { ServicoEstabelecimento } from './ServicoEstabelecimento.entity';
 
-@Entity()
-export class Estabelecimento {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
-
-  @OneToOne(() => Endereco, (endereco) => endereco.estabelecimento, {
-    nullable: false,
-    cascade: true,
-  })
-  @JoinColumn()
-  @IsDefined({ message: 'Endereço é obrigatório' })
-  endereco: Endereco;
+@ChildEntity()
+export class Estabelecimento extends Usuario {
 
   @OneToMany(() => HorarioFuncionamento, (horario) => horario.estabelecimento, {
     cascade: true,
@@ -32,20 +26,21 @@ export class Estabelecimento {
   })
   horariosFuncionamento: HorarioFuncionamento[];
 
-  @Column()
-  nome: string;
+  @OneToMany(() => Profissional, (profissional) => profissional.estabelecimento, {nullable: false})
+  @ArrayMinSize(1, {
+    message: 'É necessário ter pelo menos 1 profissional',
+  })
+  profissionais: Profissional[];
+
+  @OneToMany(() => ServicoEstabelecimento, (servico) => servico.estabelecimento, {nullable: false, cascade: true})
+  @ArrayMinSize(1, {
+    message: 'É necessário ter pelo menos 1 serviço',
+  })
+  servicos: ServicoEstabelecimento[];
+
 
   @Column()
   descricao: string;
-
-  @Column()
-  telefone: string;
-
-  @Column()
-  email: string;
-
-  @Column({ select: false })
-  senha: string;
 
   @Column({ nullable: true })
   cnpj: string;

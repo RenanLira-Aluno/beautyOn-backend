@@ -1,21 +1,13 @@
 import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
-import { Cliente } from './cliente.entity';
-import { Estabelecimento } from './estabelecimento.entity';
+import { Usuario } from './usuario.entity';
 
 @Entity()
 export class Endereco {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @OneToOne(() => Cliente, (cliente) => cliente.endereco, { nullable: true })
-  cliente: Cliente;
-
-  @OneToOne(
-    () => Estabelecimento,
-    (estabelecimento) => estabelecimento.endereco,
-    { nullable: true },
-  )
-  estabelecimento: Estabelecimento;
+  @OneToOne(() => Usuario, (usuario) => usuario.endereco)
+  usuario: Usuario
 
   @Column()
   logradouro: string;

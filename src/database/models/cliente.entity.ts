@@ -1,39 +1,25 @@
 import {
+  ChildEntity,
   Column,
   Entity,
   JoinColumn,
+  OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Endereco } from './endereco.entity';
+import { Usuario } from './usuario.entity';
+import { Agendamento } from './agendamento.entity';
 
-@Entity()
-export class Cliente {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
-
-  @OneToOne(() => Endereco, (endereco) => endereco.cliente, {
-    nullable: true,
-    cascade: true,
-  })
-  @JoinColumn()
-  endereco?: Endereco;
-
-  @Column()
-  nome: string;
-
-  @Column({ unique: true })
-  email: string;
-
-  @Column({ select: false })
-  senha: string;
-
-  @Column({ unique: true })
-  telefone: string;
-
+@ChildEntity()
+export class Cliente extends Usuario {
+  
   @Column({ nullable: true })
   lat?: number;
 
   @Column({ nullable: true })
   long?: number;
+
+  @OneToMany(() => Agendamento, (agendamento) => agendamento.cliente)
+  agendamentos: Agendamento[];
 }
