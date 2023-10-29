@@ -20,6 +20,6 @@ export class Cliente extends Usuario {
   @Column({ nullable: true })
   long?: number;
 
-  @OneToMany(() => Agendamento, (agendamento) => agendamento.cliente)
+  @OneToMany(() => Agendamento, (agendamento) => agendamento.cliente, {nullable: true})
   agendamentos: Agendamento[];
 }

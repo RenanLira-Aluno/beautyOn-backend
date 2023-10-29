@@ -6,10 +6,10 @@ export class CategoriaServico {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
-    @Column()
+    @Column({nullable: false, unique: true})
     nome: string;
 
-    @Column()
+    @Column({nullable: false})
     descricao: string;
 
     @OneToMany(

@@ -23,22 +23,22 @@ export class ServicoEstabelecimento {
     )
     categoria: CategoriaServico
 
-    @ManyToMany(() => Profissional, (profissional) => profissional.servicos)
-    profissionais: Profissional[]
+    @ManyToMany(() => Profissional, (profissional) => profissional.servicos, {nullable: true})
+    profissionais?: Profissional[]
 
-    @OneToMany(() => Agendamento, (agendamento) => agendamento.servico)
-    agendamentos: Agendamento[];
+    @OneToMany(() => Agendamento, (agendamento) => agendamento.servico, {nullable: true})
+    agendamentos?: Agendamento[];
     
-    @Column()
+    @Column({nullable: false})
     nome: string;
 
-    @Column()
+    @Column({nullable: false})
     preco: number;
 
-    @Column()
+    @Column({nullable: false})
     duracao: number;
 
-    @Column()
+    @Column({nullable: false})
     descricao: string;
 
 

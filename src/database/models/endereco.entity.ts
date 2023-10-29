@@ -9,30 +9,30 @@ export class Endereco {
   @OneToOne(() => Usuario, (usuario) => usuario.endereco)
   usuario: Usuario
 
-  @Column()
+  @Column({nullable: false})
   logradouro: string;
 
-  @Column()
+  @Column({nullable: false})
   numero: string;
 
   @Column({ nullable: true })
   complemento: string;
 
-  @Column()
+  @Column({nullable: false})
   bairro: string;
 
-  @Column()
+  @Column({nullable: false})
   cidade: string;
 
-  @Column()
+  @Column({nullable: false})
   estado: string;
 
-  @Column()
+  @Column({nullable: false})
   cep: string;
 
   @Column({ nullable: true })
-  latitude: number;
+  latitude?: number;
 
   @Column({ nullable: true })
-  longitude: number;
+  longitude?: number;
 }

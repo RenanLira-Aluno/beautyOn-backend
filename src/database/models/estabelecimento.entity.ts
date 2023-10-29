@@ -39,9 +39,9 @@ export class Estabelecimento extends Usuario {
   servicos: ServicoEstabelecimento[];
 
 
-  @Column()
+  @Column({nullable: false})
   descricao: string;
 
   @Column({ nullable: true })
-  cnpj: string;
+  cnpj?: string;
 }

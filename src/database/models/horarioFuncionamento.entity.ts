@@ -20,10 +20,10 @@ export class HorarioFuncionamento {
   diaSemana: number;
 
   @IsMilitaryTime({})
-  @Column()
+  @Column({nullable: false})
   horaAbertura: string;
 
   @IsMilitaryTime({})
-  @Column()
+  @Column({nullable: false})
   horaFechamento: string;
 }

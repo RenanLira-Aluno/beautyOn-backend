@@ -8,22 +8,22 @@ export class Agendamento {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
-    @ManyToOne(() => Cliente, (cliente) => cliente.agendamentos)
+    @ManyToOne(() => Cliente, (cliente) => cliente.agendamentos, {nullable: false})
     cliente: Cliente;
 
-    @ManyToOne(() => ServicoEstabelecimento, (servicoEstabelecimento) => servicoEstabelecimento.agendamentos)
+    @ManyToOne(() => ServicoEstabelecimento, (servicoEstabelecimento) => servicoEstabelecimento.agendamentos, {nullable: false})
     servico: ServicoEstabelecimento;
 
-    @ManyToOne(() => Profissional, (profissional) => profissional.agendamentos)
+    @ManyToOne(() => Profissional, (profissional) => profissional.agendamentos, {nullable: false})
     profissional: Profissional;
 
-    @Column()
+    @Column({type: 'date'})
     data: string;
 
-    @Column()
+    @Column({nullable: false})
     hora: string;
 
-    @Column()
+    @Column({default: 'pendente'})
     status: string;
     
 
