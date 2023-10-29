@@ -16,4 +16,10 @@ export class EstabelecimentoService {
 
     return estabelecimento;
   }
+
+  async findAll() {
+    const estabelecimentos = await this.estabelecimentoRepo.find();
+
+    return estabelecimentos;
+  }
 }
