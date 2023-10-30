@@ -7,6 +7,13 @@ import { Agendamento } from "./agendamento.entity";
 
 @ChildEntity()
 export class Profissional extends Usuario {
+
+  @Column({nullable: false})
+  primeiroNome: string;
+
+  @Column({nullable: false})
+  segundoNome: string;
+  
   @Column()
   descricao: string;
   

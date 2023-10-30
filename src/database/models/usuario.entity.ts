@@ -15,9 +15,6 @@ export class Usuario {
     @JoinColumn()
     endereco?: Endereco;
 
-    @Column()
-    nome: string;
-
     @Column({ unique: true })
     @IsEmail()
     email: string;
