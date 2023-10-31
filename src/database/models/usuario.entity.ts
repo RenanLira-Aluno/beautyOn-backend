@@ -32,4 +32,7 @@ export class Usuario {
   @Column({ unique: true })
   @IsMobilePhone('pt-BR')
   telefone: string;
+
+  @Column({ nullable: true })
+  fotoPerfil: string;
 }

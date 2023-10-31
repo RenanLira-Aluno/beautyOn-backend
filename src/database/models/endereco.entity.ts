@@ -30,9 +30,9 @@ export class Endereco {
   @Column({ nullable: false })
   cep: string;
 
-  @Column({ nullable: true, type: 'float' })
+  @Column({ nullable: false, type: 'float' })
   latitude?: number;
 
-  @Column({ nullable: true, type: 'float' })
+  @Column({ nullable: false, type: 'float' })
   longitude?: number;
 }

@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Estabelecimento } from 'src/database/models/estabelecimento.entity';
-import { Repository } from 'typeorm';
+import { Like, Repository } from 'typeorm';
 import { CreateEstabelecimentoDTO } from './schemas/estabelecimento.schema';
 import { ServicoEstabelecimento } from 'src/database/models/ServicoEstabelecimento.entity';
 
@@ -28,7 +28,20 @@ export class EstabelecimentoService {
 
   async findAll() {
     const estabelecimentos = await this.estabelecimentoRepo.find({
-      relations: ['endereco', 'servicos'],
+      relations: { endereco: true, servicos: true },
+    });
+
+    return estabelecimentos;
+  }
+
+  async findFilter(nome?: string, tipoServico?: string) {
+    const estabelecimentos = await this.estabelecimentoRepo.find({
+      where: {
+        nomeEmpresa: Like(`%${nome ?? ''}%`),
+        servicos: { categoriaCodigo: tipoServico ?? tipoServico },
+      },
+      relations: { endereco: true, servicos: true },
+      take: 5,
     });
 
     return estabelecimentos;

@@ -30,7 +30,7 @@ export class Profissional extends Usuario {
 
   @ManyToMany(() => ServicoEstabelecimento, (servico) => servico.profissionais)
   @JoinTable()
-  servicos: ServicoEstabelecimento[];
+  servicosPrestados: ServicoEstabelecimento[];
 
   @OneToMany(() => Agendamento, (agendamento) => agendamento.profissional)
   agendamentos: Agendamento[];

@@ -1,20 +1,32 @@
-import { Body, Controller, HttpCode, Post } from '@nestjs/common';
+import { Body, Controller, HttpCode, Post, Request } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { LoginClienteDto } from './schemas/login.schema';
 import { CreateClienteDto } from '../ClienteModule/schemas/cliente.schema';
 import { CreateEstabelecimentoDTO } from '../EstabelecimentoModule/schemas/estabelecimento.schema';
+import { FastifyRequest } from 'fastify';
+import { createWriteStream } from 'fs';
+import { JwtService } from '@nestjs/jwt';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private jwtService: JwtService,
+  ) {}
 
   @HttpCode(200)
   @Post('login')
   async signIn(@Body() loginClienteDto: LoginClienteDto) {
-    return await this.authService.signIn(
+    const cliente = await this.authService.signIn(
       loginClienteDto.email,
       loginClienteDto.senha,
     );
+
+    const payload = { sub: cliente.id, username: cliente.email };
+
+    return {
+      access_token: await this.jwtService.signAsync(payload),
+    };
   }
 
   @HttpCode(201)
@@ -23,6 +35,17 @@ export class AuthController {
     const res = await this.authService.signUp(cliente);
 
     return res;
+  }
+
+  @Post('/upload/fotoPerfil')
+  async uploadFotoPerfil(@Request() req: FastifyRequest) {
+    const part = await req.file({});
+
+    const file = createWriteStream(`./uploads/${part.filename}`);
+
+    part.file.pipe(file);
+
+    return { message: 'Foto de perfil enviada com sucesso' };
   }
 
   @Post('signup-estabelecimento')

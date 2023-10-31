@@ -38,6 +38,21 @@ export class AuthService {
   async signUpEstabelecimento(
     createEstabelecimentoDto: CreateEstabelecimentoDTO,
   ) {
+    const salt = await bcrypt.genSalt(10);
+    const hash = await bcrypt.hash(createEstabelecimentoDto.senha, salt);
+
+    const profissionais = createEstabelecimentoDto.profissionais.map(
+      (profissional) => {
+        const salt = bcrypt.genSaltSync(10);
+        profissional.senha = bcrypt.hashSync(profissional.senha, salt);
+        return profissional;
+      },
+    );
+
+    createEstabelecimentoDto.profissionais = profissionais;
+
+    createEstabelecimentoDto.senha = hash;
+
     const estabelecimento = await this.estabelecimentoService.create(
       createEstabelecimentoDto,
     );

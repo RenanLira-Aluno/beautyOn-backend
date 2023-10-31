@@ -28,7 +28,13 @@ export class ServicoEstabelecimento {
   )
   categoria: CategoriaServico;
 
-  @ManyToMany(() => Profissional, (profissional) => profissional.servicos)
+  @Column()
+  categoriaCodigo: string;
+
+  @ManyToMany(
+    () => Profissional,
+    (profissional) => profissional.servicosPrestados,
+  )
   profissionais: Profissional[];
 
   @OneToMany(() => Agendamento, (agendamento) => agendamento.servico)

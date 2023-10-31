@@ -21,7 +21,8 @@ export class AdminService {
   }
 
   async createCategoriaServico(entity: createCategoriaServicoDTO) {
-    const categoriaServico = await this.categoriaServicoRepository.save(entity);
+    const categoriaServico =
+      await this.categoriaServicoRepository.insert(entity);
 
     return categoriaServico;
   }
