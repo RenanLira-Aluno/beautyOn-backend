@@ -15,8 +15,8 @@ export class EstabelecimentoController {
 
   @Get(`/proximos`)
   async findProximos(@Query('lat') lat: number, @Query('long') long: number) {
-
-    if (!lat || !long) return {message: 'É necessário informar a latitude e longitude'}
+    if (!lat || !long)
+      return { message: 'É necessário informar a latitude e longitude' };
 
     const estabelecimentos = await this.estaService.findProximos(lat, long);
 
@@ -24,9 +24,7 @@ export class EstabelecimentoController {
   }
 
   @Post(`:nomeEmpresa/servico`)
-  async createServico(
-    @Body() servicoDto: ServicoEstabelecimento
-  ) {
+  async createServico(@Body() servicoDto: ServicoEstabelecimento) {
     const servico = await this.estaService.createServico(servicoDto);
 
     return servico;
