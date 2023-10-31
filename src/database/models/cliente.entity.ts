@@ -13,7 +13,6 @@ import { Agendamento } from './agendamento.entity';
 
 @ChildEntity()
 export class Cliente extends Usuario {
-  
   @Column({ nullable: true })
   lat?: number;
 
