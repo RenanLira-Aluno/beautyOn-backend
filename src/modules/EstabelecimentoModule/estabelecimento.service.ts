@@ -27,7 +27,7 @@ export class EstabelecimentoService {
   }
 
   async findAll() {
-    const estabelecimentos = await this.estabelecimentoRepo.find({relations: ['endereco']});
+    const estabelecimentos = await this.estabelecimentoRepo.find({relations: ['endereco', 'servicos']});
 
     return estabelecimentos;
   }

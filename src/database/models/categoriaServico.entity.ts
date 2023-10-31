@@ -1,10 +1,11 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToMany, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
 import { ServicoEstabelecimento } from "./ServicoEstabelecimento.entity";
 
 @Entity()
 export class CategoriaServico {
-    @PrimaryGeneratedColumn('uuid')
-    id: string;
+
+    @PrimaryColumn({unique: true, nullable: false, })
+    codigo: string;
 
     @Column({nullable: false, unique: true})
     nome: string;
