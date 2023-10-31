@@ -13,6 +13,13 @@ import { Agendamento } from './agendamento.entity';
 
 @ChildEntity()
 export class Cliente extends Usuario {
+
+  @Column({nullable: false})
+  primeiroNome: string;
+
+  @Column({nullable: false})
+  segundoNome: string;
+  
   @Column({ nullable: true })
   lat?: number;
 

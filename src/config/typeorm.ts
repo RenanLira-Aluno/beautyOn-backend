@@ -8,7 +8,7 @@ export const config: TypeOrmModuleOptions = {
   entities: ['dist/database/models/*.entity{.ts,.js}'],
   migrations: ['dist/database/migrations/**/*{.ts,.js}'],
   autoLoadEntities: true,
-  synchronize: false,
+  synchronize: true,
 };
 
 export default registerAs('typeorm', () => config);

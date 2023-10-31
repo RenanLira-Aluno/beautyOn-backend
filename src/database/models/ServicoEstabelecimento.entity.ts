@@ -12,22 +12,20 @@ export class ServicoEstabelecimento {
     @ManyToOne(
       () => Estabelecimento,
       (estabelecimento) => estabelecimento.servicos,
-      {nullable: false}
     )
     estabelecimento: Estabelecimento;
 
     @ManyToOne(
         () => CategoriaServico,
         (categoriaServico) => categoriaServico.servicos,
-        {nullable: false}
     )
     categoria: CategoriaServico
 
-    @ManyToMany(() => Profissional, (profissional) => profissional.servicos, {nullable: true})
-    profissionais?: Profissional[]
+    @ManyToMany(() => Profissional, (profissional) => profissional.servicos)
+    profissionais: Profissional[]
 
-    @OneToMany(() => Agendamento, (agendamento) => agendamento.servico, {nullable: true})
-    agendamentos?: Agendamento[];
+    @OneToMany(() => Agendamento, (agendamento) => agendamento.servico)
+    agendamentos: Agendamento[];
     
     @Column({nullable: false})
     nome: string;

@@ -26,7 +26,7 @@ export class Estabelecimento extends Usuario {
   })
   horariosFuncionamento: HorarioFuncionamento[];
 
-  @OneToMany(() => Profissional, (profissional) => profissional.estabelecimento, {nullable: false})
+  @OneToMany(() => Profissional, (profissional) => profissional.estabelecimento, {nullable: false, cascade: ['insert']})
   @ArrayMinSize(1, {
     message: 'É necessário ter pelo menos 1 profissional',
   })
@@ -38,6 +38,8 @@ export class Estabelecimento extends Usuario {
   })
   servicos: ServicoEstabelecimento[];
 
+  @Column({nullable: false})
+  nomeEmpresa: string;
 
   @Column({nullable: false})
   descricao: string;
