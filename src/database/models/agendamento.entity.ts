@@ -4,8 +4,10 @@ import { ServicoEstabelecimento } from './ServicoEstabelecimento.entity';
 import { Profissional } from './profissional.entity';
 import {
   IsDateString,
+  IsEmpty,
   IsEnum,
   IsMilitaryTime,
+  IsNotEmpty,
   IsOptional,
 } from 'class-validator';
 
@@ -14,22 +16,29 @@ export class Agendamento {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @ManyToOne(() => Cliente, (cliente) => cliente.agendamentos, {
-    nullable: false,
-  })
+  @ManyToOne(() => Cliente, (cliente) => cliente.agendamentos)
+  @IsNotEmpty()
   cliente: Cliente;
+
+  @Column({ nullable: false })
+  clienteId: string;
 
   @ManyToOne(
     () => ServicoEstabelecimento,
     (servicoEstabelecimento) => servicoEstabelecimento.agendamentos,
-    { nullable: false },
   )
+  @IsNotEmpty()
   servico: ServicoEstabelecimento;
 
-  @ManyToOne(() => Profissional, (profissional) => profissional.agendamentos, {
-    nullable: false,
-  })
+  @Column({ nullable: false })
+  servicoId: string;
+
+  @ManyToOne(() => Profissional, (profissional) => profissional.agendamentos)
   profissional: Profissional;
+
+  @Column({ nullable: false })
+  @IsOptional()
+  profissionalId: string;
 
   @Column({ type: 'date' })
   @IsDateString({ strict: true })
@@ -41,6 +50,6 @@ export class Agendamento {
 
   @Column({ default: 'pendente' })
   @IsEnum(['pendente', 'confirmado', 'cancelado'])
-  @IsOptional()
+  @IsEmpty()
   status: string;
 }

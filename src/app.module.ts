@@ -9,6 +9,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import typeorm from './config/typeorm';
 import { AuthModule } from './modules/auth/auth.module';
 import { AdminModule } from './modules/admin/admin.module';
+import { AgendamentoModule } from './modules/agendamento/agendamento.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { AdminModule } from './modules/admin/admin.module';
       useFactory: async (configService: ConfigService) =>
         configService.get('typeorm'),
     }),
+    AgendamentoModule,
     AuthModule,
     ClienteModule,
     EstabelecimentoModule,

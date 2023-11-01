@@ -47,6 +47,15 @@ export class EstabelecimentoService {
     return estabelecimentos;
   }
 
+  async getProfissional(id: string) {
+    const estabelecimento = await this.estabelecimentoRepo.findOne({
+      where: { profissionais: { id } },
+      relations: { profissionais: true },
+    });
+
+    return estabelecimento.profissionais;
+  }
+
   async findProximos(
     latitude: number,
     longitude: number,
