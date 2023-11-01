@@ -2,7 +2,12 @@ import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { Cliente } from './cliente.entity';
 import { ServicoEstabelecimento } from './ServicoEstabelecimento.entity';
 import { Profissional } from './profissional.entity';
-import { IsDateString, IsEnum, IsMilitaryTime } from 'class-validator';
+import {
+  IsDateString,
+  IsEnum,
+  IsMilitaryTime,
+  IsOptional,
+} from 'class-validator';
 
 @Entity()
 export class Agendamento {
@@ -36,5 +41,6 @@ export class Agendamento {
 
   @Column({ default: 'pendente' })
   @IsEnum(['pendente', 'confirmado', 'cancelado'])
+  @IsOptional()
   status: string;
 }

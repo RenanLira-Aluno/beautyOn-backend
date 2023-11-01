@@ -1,8 +1,8 @@
 import { Body, Controller, HttpCode, Post, Request } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { LoginClienteDto } from './schemas/login.schema';
-import { CreateClienteDto } from '../ClienteModule/schemas/cliente.schema';
-import { CreateEstabelecimentoDTO } from '../EstabelecimentoModule/schemas/estabelecimento.schema';
+import { CreateClienteDto } from '../cliente/schemas/cliente.schema';
+import { CreateEstabelecimentoDTO } from '../estabelecimento/schemas/estabelecimento.schema';
 import { FastifyRequest } from 'fastify';
 import { createWriteStream } from 'fs';
 import { JwtService } from '@nestjs/jwt';

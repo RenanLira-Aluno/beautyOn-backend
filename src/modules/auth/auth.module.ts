@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
-import { ClienteModule } from '../ClienteModule/cliente.module';
+import { ClienteModule } from '../cliente/cliente.module';
 import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
-import { EstabelecimentoModule } from '../EstabelecimentoModule/estabelecimento.module';
+import { EstabelecimentoModule } from '../estabelecimento/estabelecimento.module';
 import { JwtModule } from '@nestjs/jwt';
 import { jwtConstants } from './constants';
 

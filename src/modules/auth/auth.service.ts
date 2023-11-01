@@ -1,9 +1,9 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { ClienteService } from '../ClienteModule/cliente.service';
+import { ClienteService } from '../cliente/cliente.service';
 import * as bcrypt from 'bcryptjs';
-import { CreateClienteDto } from '../ClienteModule/schemas/cliente.schema';
-import { CreateEstabelecimentoDTO } from '../EstabelecimentoModule/schemas/estabelecimento.schema';
-import { EstabelecimentoService } from '../EstabelecimentoModule/estabelecimento.service';
+import { CreateClienteDto } from '../cliente/schemas/cliente.schema';
+import { CreateEstabelecimentoDTO } from '../estabelecimento/schemas/estabelecimento.schema';
+import { EstabelecimentoService } from '../estabelecimento/estabelecimento.service';
 
 @Injectable()
 export class AuthService {
