@@ -7,7 +7,7 @@ import {
   TableInheritance,
 } from 'typeorm';
 import { Endereco } from './endereco.entity';
-import { IsEmail, IsMobilePhone } from 'class-validator';
+import { IsEmail, IsMobilePhone, IsNotEmpty } from 'class-validator';
 
 @Entity()
 @TableInheritance({ column: { type: 'varchar', name: 'discriminator' } })
@@ -27,6 +27,7 @@ export class Usuario {
   email: string;
 
   @Column({ select: false })
+  @IsNotEmpty()
   senha: string;
 
   @Column({ unique: true })

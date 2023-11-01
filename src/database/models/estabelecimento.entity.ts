@@ -1,10 +1,16 @@
 import { ChildEntity, Column, OneToMany } from 'typeorm';
-import { ArrayMinSize } from 'class-validator';
+import {
+  ArrayMinSize,
+  IsNotEmpty,
+  IsOptional,
+  Validate,
+} from 'class-validator';
 
 import { HorarioFuncionamento } from './horarioFuncionamento.entity';
 import { Usuario } from './usuario.entity';
 import { Profissional } from './profissional.entity';
 import { ServicoEstabelecimento } from './ServicoEstabelecimento.entity';
+import { CnpjValid } from 'src/validations/cnpj.validator';
 
 @ChildEntity()
 export class Estabelecimento extends Usuario {
@@ -38,11 +44,15 @@ export class Estabelecimento extends Usuario {
   servicos: ServicoEstabelecimento[];
 
   @Column({ nullable: false })
+  @IsNotEmpty()
   nomeEmpresa: string;
 
   @Column({ nullable: false })
+  @IsNotEmpty()
   descricao: string;
 
   @Column({ nullable: true })
+  @Validate(CnpjValid)
+  @IsOptional()
   cnpj?: string;
 }

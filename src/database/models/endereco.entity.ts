@@ -1,5 +1,6 @@
 import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { Usuario } from './usuario.entity';
+import { IsLatitude, IsLongitude } from 'class-validator';
 
 @Entity()
 export class Endereco {
@@ -31,8 +32,10 @@ export class Endereco {
   cep: string;
 
   @Column({ nullable: false, type: 'float' })
-  latitude?: number;
+  @IsLatitude()
+  latitude: number;
 
   @Column({ nullable: false, type: 'float' })
-  longitude?: number;
+  @IsLongitude()
+  longitude: number;
 }

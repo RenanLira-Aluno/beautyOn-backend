@@ -10,6 +10,7 @@ import { Estabelecimento } from './estabelecimento.entity';
 import { CategoriaServico } from './categoriaServico.entity';
 import { Profissional } from './profissional.entity';
 import { Agendamento } from './agendamento.entity';
+import { IsCurrency, IsNotEmpty } from 'class-validator';
 
 @Entity()
 export class ServicoEstabelecimento {
@@ -29,6 +30,7 @@ export class ServicoEstabelecimento {
   categoria: CategoriaServico;
 
   @Column()
+  @IsNotEmpty()
   categoriaCodigo: string;
 
   @ManyToMany(
@@ -41,14 +43,22 @@ export class ServicoEstabelecimento {
   agendamentos: Agendamento[];
 
   @Column({ nullable: false })
+  @IsNotEmpty()
   nome: string;
 
   @Column({ nullable: false })
+  @IsCurrency({
+    allow_negatives: false,
+    thousands_separator: '.',
+    decimal_separator: ',',
+  })
   preco: number;
 
   @Column({ nullable: false })
+  @IsNotEmpty()
   duracao: number;
 
   @Column({ nullable: false })
+  @IsNotEmpty()
   descricao: string;
 }
