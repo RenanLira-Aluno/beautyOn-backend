@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Post, Query } from '@nestjs/common';
 import { EstabelecimentoService } from './estabelecimento.service';
-import { ServicoEstabelecimento } from 'src/database/models/ServicoEstabelecimento.entity';
+// import { ServicoEstabelecimento } from 'src/database/models/ServicoEstabelecimento.entity';
 import { ProfissinalServicoEstabelecimentoDto } from './dto/profissionalServicoEstabelecimento.dto';
 
 @Controller('estabelecimentos')
@@ -45,12 +45,12 @@ export class EstabelecimentoController {
     return estabelecimentos;
   }
 
-  @Post(`:nomeEmpresa/servico`)
-  async createServico(@Body() servicoDto: ServicoEstabelecimento) {
-    const servico = await this.estaService.createServico(servicoDto);
+  // @Post(`:nomeEmpresa/servico`)
+  // async createServico(@Body() servicoDto: ServicoEstabelecimento) {
+  //   const servico = await this.estaService.createServico(servicoDto);
 
-    return servico;
-  }
+  //   return servico;
+  // }
 
   @Post(`servico/registrarProfissional/`)
   async registrarProfServico(
