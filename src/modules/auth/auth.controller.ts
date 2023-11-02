@@ -1,11 +1,12 @@
-import { Body, Controller, HttpCode, Post, Request } from '@nestjs/common';
+import { Body, Controller, HttpCode, Post, Request, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { LoginClienteDto } from './schemas/login.schema';
+import { LoginClienteDto } from './dto/login.schema';
 import { CreateClienteDto } from '../cliente/schemas/cliente.schema';
 import { CreateEstabelecimentoDTO } from '../estabelecimento/schemas/estabelecimento.schema';
 import { FastifyRequest } from 'fastify';
 import { createWriteStream } from 'fs';
 import { JwtService } from '@nestjs/jwt';
+import { LocalAuthGuard } from './guards/local-auth.guard';
 
 @Controller('auth')
 export class AuthController {
@@ -15,6 +16,7 @@ export class AuthController {
   ) {}
 
   @HttpCode(200)
+  @UseGuards(LocalAuthGuard)
   @Post('login')
   async signIn(@Body() loginClienteDto: LoginClienteDto) {
     const cliente = await this.authService.signIn(

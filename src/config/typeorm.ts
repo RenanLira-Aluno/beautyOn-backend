@@ -3,8 +3,12 @@ import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { DataSource, DataSourceOptions } from 'typeorm';
 
 export const config: TypeOrmModuleOptions = {
-  type: 'better-sqlite3',
-  database: 'dev.db',
+  type: 'postgres',
+  host: `168.75.103.246`,
+  port: 5432,
+  username: 'postgres',
+  password: 'renan0123',
+  database: 'beautyontest',
   entities: ['dist/database/models/*.entity{.ts,.js}'],
   migrations: ['dist/database/migrations/**/*{.ts,.js}'],
   autoLoadEntities: true,

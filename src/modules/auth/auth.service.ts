@@ -59,4 +59,20 @@ export class AuthService {
 
     return estabelecimento;
   }
+
+  async validateUser(email: string, senha: string) {
+    const cliente = await this.clienteService.findOne(email);
+
+    if (cliente) {
+      const match = await bcrypt.compare(senha, cliente.senha);
+
+      if (match) {
+        return cliente;
+      }
+    }
+
+    throw new UnauthorizedException(`email ou senha inválidos`);
+
+
+  }
 }
