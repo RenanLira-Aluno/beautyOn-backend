@@ -26,7 +26,10 @@ export class Usuario {
   @IsEmail()
   email: string;
 
-  @Column({ select: false })
+  @Column()
+  discriminator?: string
+
+  @Column({})
   @IsNotEmpty()
   senha: string;
 

@@ -7,6 +7,7 @@ import { FastifyRequest } from 'fastify';
 import { createWriteStream } from 'fs';
 import { JwtService } from '@nestjs/jwt';
 import { LocalAuthGuard } from './guards/local-auth.guard';
+import { AuthRequest } from './models/AuthRequest.model';
 
 @Controller('auth')
 export class AuthController {
@@ -18,17 +19,8 @@ export class AuthController {
   @HttpCode(200)
   @UseGuards(LocalAuthGuard)
   @Post('login')
-  async signIn(@Body() loginClienteDto: LoginClienteDto) {
-    const cliente = await this.authService.signIn(
-      loginClienteDto.email,
-      loginClienteDto.senha,
-    );
-
-    const payload = { sub: cliente.id, username: cliente.email };
-
-    return {
-      access_token: await this.jwtService.signAsync(payload),
-    };
+  async signIn(@Request() req: AuthRequest) {
+    return this.authService.login(req.user);
   }
 
   @HttpCode(201)

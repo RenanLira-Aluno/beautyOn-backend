@@ -18,7 +18,6 @@ export class ClienteService {
   async findOne(email: string): Promise<Cliente> {
     return await this.clienteRepo.findOne({
       where: { email },
-      select: ['email', 'senha'],
     });
   }
 
