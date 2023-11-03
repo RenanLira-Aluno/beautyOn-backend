@@ -12,6 +12,7 @@ import { AdminModule } from './modules/admin/admin.module';
 import { AgendamentoModule } from './modules/agendamento/agendamento.module';
 import { JwtAuthGuard } from './modules/auth/guards/jwt-auth.guard';
 import { APP_GUARD } from '@nestjs/core';
+import { UsuarioModule } from './modules/usuario/usuario.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { APP_GUARD } from '@nestjs/core';
       useFactory: async (configService: ConfigService) =>
         configService.get('typeorm'),
     }),
+    UsuarioModule,
     AgendamentoModule,
     AuthModule,
     ClienteModule,

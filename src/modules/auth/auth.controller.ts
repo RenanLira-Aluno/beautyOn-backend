@@ -1,4 +1,4 @@
-import { Body, Controller, HttpCode, Post, Request, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, Post, Request, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { LoginClienteDto } from './dto/login.schema';
 import { CreateClienteDto } from '../cliente/schemas/cliente.schema';
@@ -8,15 +8,19 @@ import { createWriteStream } from 'fs';
 import { JwtService } from '@nestjs/jwt';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 import { AuthRequest } from './models/AuthRequest.model';
+import { IsPublic } from './decorators/is-public.decorator';
+import { CurrentUser } from './decorators/current-user.decorator';
+import { Usuario } from 'src/database/models/usuario.entity';
+import { UserFromJwt } from './models/UserFromJwt';
 
 @Controller('auth')
 export class AuthController {
   constructor(
     private authService: AuthService,
-    private jwtService: JwtService,
   ) {}
 
   @HttpCode(200)
+  @IsPublic()
   @UseGuards(LocalAuthGuard)
   @Post('login')
   async signIn(@Request() req: AuthRequest) {
@@ -25,10 +29,18 @@ export class AuthController {
 
   @HttpCode(201)
   @Post('signup')
+  @IsPublic()
   async signUp(@Body() cliente: CreateClienteDto) {
     const res = await this.authService.signUp(cliente);
 
     return res;
+  }
+
+  @Get('me')
+  async getMe(@CurrentUser() user: UserFromJwt) {
+    console.log(user)
+    return await this.authService.getMe(user);
+
   }
 
   @Post('/upload/fotoPerfil')
@@ -43,6 +55,7 @@ export class AuthController {
   }
 
   @Post('signup-estabelecimento')
+  @IsPublic()
   async signUpEstabelecimento(
     @Body() estabelecimento: CreateEstabelecimentoDTO,
   ) {

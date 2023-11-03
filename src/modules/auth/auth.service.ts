@@ -9,14 +9,17 @@ import { Cliente } from 'src/database/models/cliente.entity';
 import { UserPayload } from './models/UserPayload';
 import { JwtService } from '@nestjs/jwt';
 import { UserTokenResponse } from './models/userToken';
+import { UsuarioService } from '../usuario/usuario.service';
+import { UserFromJwt } from './models/UserFromJwt';
 
 @Injectable()
 export class AuthService {
   constructor(
     private clienteService: ClienteService,
     private estabelecimentoService: EstabelecimentoService,
+    private usuarioService: UsuarioService,
     private jwtService: JwtService,
-  ) {}
+  ) { }
 
   async login(user: Usuario): Promise<UserTokenResponse> {
     const payload: UserPayload = {
@@ -32,7 +35,7 @@ export class AuthService {
     }
 
 
-    
+
   }
 
   async signUp(createClienteDto: CreateClienteDto) {
@@ -74,7 +77,7 @@ export class AuthService {
   }
 
   async validateUser(email: string, senha: string) {
-    const cliente = await this.clienteService.findOne(email);
+    const cliente = await this.usuarioService.findOne(email);
 
     if (cliente) {
       const match = await bcrypt.compare(senha, cliente.senha);
@@ -88,7 +91,9 @@ export class AuthService {
     }
 
     throw new UnauthorizedException(`email ou senha inválidos`);
+  }
 
-
+  async getMe(user: UserFromJwt) {
+    return await this.usuarioService.getUsuarioById(user.userId, user.tipo)
   }
 }
