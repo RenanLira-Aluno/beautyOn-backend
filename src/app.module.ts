@@ -33,9 +33,12 @@ import { UsuarioModule } from './modules/usuario/usuario.module';
     AdminModule,
   ],
   controllers: [AppController],
-  providers: [AppService, {
-    provide: APP_GUARD,
-    useClass: JwtAuthGuard,
-  }],
+  providers: [AppService],
 })
 export class AppModule {}
+
+
+// {
+//   provide: APP_GUARD,
+//   useClass: JwtAuthGuard,
+// }
