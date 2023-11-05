@@ -10,7 +10,7 @@ export class EstabelecimentoController {
   @Get(``)
   async findAll(
     @Query('porNome') nome?: string,
-    @Query('tipoServico') tipoServico?: string,
+    @Query('tipoServico') tipoServico?: string[],
   ) {
     if (nome || tipoServico) {
       const estabelecimentos = await this.estaService.findFilter(
