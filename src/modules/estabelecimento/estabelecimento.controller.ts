@@ -29,17 +29,14 @@ export class EstabelecimentoController {
   async findProximos(
     @Query('lat') lat: number,
     @Query('long') long: number,
-    @Query('distancia') distancia: number,
-    @Query('limit') limit: number,
+    @Query('distancia') distancia?: number,
+    @Query('limit') limit?: number,
   ) {
     if (!lat || !long)
       return { message: 'É necessário informar a latitude e longitude' };
-
     const estabelecimentos = await this.estaService.findProximos(
       lat,
       long,
-      distancia,
-      limit,
     );
 
     return estabelecimentos;
