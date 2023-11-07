@@ -32,12 +32,16 @@ export class EstabelecimentoController {
     @Query('long') long: number,
     @Query('distancia') distancia?: number,
     @Query('limit') limit?: number,
+    @Query('tipoServico') tipoServico?: string,
   ) {
     if (!lat || !long)
       return { message: 'É necessário informar a latitude e longitude' };
+
+    const servicos = tipoServico?.split(',');
     const estabelecimentos = await this.estaService.findProximos(
       lat,
       long,
+      servicos ?? undefined,
     );
 
     return estabelecimentos;
