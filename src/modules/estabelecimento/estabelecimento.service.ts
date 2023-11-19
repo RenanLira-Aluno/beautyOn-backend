@@ -37,7 +37,7 @@ export class EstabelecimentoService {
   async findFilter(nome?: string, tipoServico?: string[]) {
     console.log(tipoServico)
     const estabelecimentos = await this.estabelecimentoRepo.find({
-      where: 
+      where:
         {
           nomeEmpresa: ILike(`%${nome ?? ''}%`),
           servicos: {categoriaCodigo: tipoServico ? In(tipoServico) : Like('%%')}
@@ -61,14 +61,17 @@ export class EstabelecimentoService {
   async findProximos(
     latitude: number,
     longitude: number,
+    tipoServico?: string[],
     distancia?: number,
     limit?: number,
   ) {
-    const dis = distancia ?? 5;
-    const lim = limit ?? 10;
+
+    console.log(tipoServico ? tipoServico : ['%%'])
+
     const proximos = await this.estabelecimentoRepo
       .createQueryBuilder('estabelecimento')
       .innerJoinAndSelect('estabelecimento.endereco', 'endereco')
+      .innerJoinAndSelect('estabelecimento.servicos', 'servicos')
       .where(
         `
             6371 * acos(
@@ -76,14 +79,15 @@ export class EstabelecimentoService {
                 * cos(radians(endereco.longitude) - radians(${longitude}))
                 + sin(radians(${latitude})) * sin(radians(endereco.latitude))
             ) < :dis
-        `, { dis: dis }
+        `, { dis: distancia ?? 5 }
       )
+      .andWhere(`servicos.categoriaCodigo LIKE ANY (ARRAY[:...tipoServico])`, { tipoServico: tipoServico ? tipoServico : ['%%'] })
       .orderBy(`6371 * acos(
         cos(radians(${latitude})) * cos(radians(endereco.latitude))
         * cos(radians(endereco.longitude) - radians(${longitude}))
         + sin(radians(${latitude})) * sin(radians(endereco.latitude))
         )`)
-      .limit(lim)
+      .limit(limit ?? 10)
       .getMany();
 
     return proximos;
