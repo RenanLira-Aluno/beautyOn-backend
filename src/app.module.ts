@@ -33,12 +33,14 @@ import { UsuarioModule } from './modules/usuario/usuario.module';
     AdminModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    {
+      provide: APP_GUARD,
+      useClass: JwtAuthGuard,
+    }
+  ],
 })
 export class AppModule {}
 
 
-// {
-//   provide: APP_GUARD,
-//   useClass: JwtAuthGuard,
-// }

@@ -4,9 +4,10 @@ import { ServicoEstabelecimento } from 'src/database/models/ServicoEstabelecimen
 import { Agendamento } from 'src/database/models/agendamento.entity';
 import { AgendamentoController } from './agendamento.controller';
 import { AgendamentoService } from './agendamento.service';
+import { CaslModule } from '../casl/casl.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Agendamento, ServicoEstabelecimento])],
+  imports: [TypeOrmModule.forFeature([Agendamento, ServicoEstabelecimento]), CaslModule],
   controllers: [AgendamentoController],
   providers: [AgendamentoService],
 })

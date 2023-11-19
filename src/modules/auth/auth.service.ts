@@ -94,6 +94,6 @@ export class AuthService {
   }
 
   async getMe(user: UserFromJwt) {
-    return await this.usuarioService.getUsuarioById(user.userId, user.tipo)
+    return await this.usuarioService.getUsuarioById(user.id, user.discriminator)
   }
 }

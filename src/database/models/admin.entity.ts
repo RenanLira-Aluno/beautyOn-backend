@@ -1,18 +1,19 @@
 import { IsEmail, IsNotEmpty, IsStrongPassword } from 'class-validator';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { ChildEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Usuario } from './usuario.entity';
 
-@Entity()
-export class Admin {
+@ChildEntity()
+export class Admin extends Usuario {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @Column({ nullable: false })
   @IsNotEmpty()
-  nome: string;
+  primeiroNome: string;
 
   @Column({ nullable: false })
-  @IsEmail()
-  email: string;
+  @IsNotEmpty()
+  segundoNome: string;
 
   @Column({ nullable: false })
   @IsStrongPassword({
