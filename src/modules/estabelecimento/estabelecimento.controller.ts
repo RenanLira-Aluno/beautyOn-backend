@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Query } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
 import { EstabelecimentoService } from './estabelecimento.service';
 // import { ServicoEstabelecimento } from 'src/database/models/ServicoEstabelecimento.entity';
 import { ProfissinalServicoEstabelecimentoDto } from './dto/profissionalServicoEstabelecimento.dto';
@@ -24,6 +24,11 @@ export class EstabelecimentoController {
     const estabelecimentos = await this.estaService.findAll();
 
     return estabelecimentos;
+  }
+
+  @Get(`/:id`)
+  async getById(@Param('id')id: string ) {
+    return this.estaService.findOne(id)
   }
 
   @Get(`/proximos`)

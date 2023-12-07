@@ -34,6 +34,21 @@ export class EstabelecimentoService {
     return estabelecimentos;
   }
 
+  async findOne(id: string) {
+    const estabelecimento = await this.estabelecimentoRepo.findOne({
+      where: {id},
+
+      relations: {
+        profissionais: true,
+        endereco: true,
+        horariosFuncionamento: true,
+        servicos: true,
+      }})
+    
+    return {...estabelecimento, senha: null, discriminator: null} as Estabelecimento
+
+  }
+
   async findFilter(nome?: string, tipoServico?: string[]) {
     console.log(tipoServico)
     const estabelecimentos = await this.estabelecimentoRepo.find({
